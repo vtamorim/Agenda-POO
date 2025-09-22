@@ -22,11 +22,10 @@ class ServicoUI:
             st.dataframe(df)
 
     def inserir():
-        nome = st.text_input("Informe o nome")
-        email = st.text_input("Informe o e-mail")
-        fone = st.text_input("Informe o fone")
+        descricao = st.text_input("Informe o descricao")
+        valor = st.text_input("Informe o valor")
         if st.button("Inserir"):
-            View.Servico_inserir(nome, email, fone)
+            View.Servico_inserir(descricao, valor)
             st.success("Servico inserido com sucesso")
             time.sleep(2)
             st.rerun()
@@ -36,12 +35,11 @@ class ServicoUI:
         if len(Servicos) == 0: st.write("Nenhum Servico cadastrado")
         else:
             op = st.selectbox("Atualização de Servicos", Servicos)
-            nome = st.text_input("Informe o novo nome", op.get_nome())
-            email = st.text_input("Informe o novo e-mail", op.get_email())
-            fone = st.text_input("Informe o novo fone", op.get_fone())
+            descricao = st.text_input("Informe o novo descricao", op.get_descricao())
+            valor = st.text_input("Informe o novo valor", op.get_valor())
             if st.button("Atualizar"):
                 id = op.get_id()
-                View.Servico_atualizar(id, nome, email, fone)
+                View.Servico_atualizar(id, descricao, valor)
                 st.success("Servico atualizado com sucesso")
                 time.sleep(2)
                 st.rerun()
