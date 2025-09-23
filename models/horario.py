@@ -4,7 +4,9 @@ class Horario:
     def __init__(self,id,data):
         self.set_id(id)
         self.set_data(data)
-        pass
+        self.__confirmado = None
+        self.__id_cliente = None
+        self.__id_servico = None
     def get_id(self): return self.__id
     
     def get_data(self): return self.__data
@@ -32,7 +34,7 @@ class Horario:
         dic= {"id":self.__id, "data":self.__data.strftime("%d/%m/%Y %H:%M"), "confirmado":self.__confirmado, "id_cliente":self.__id_cliente, "id_servico":self.__id_servico}
         return dic
     def from_json(dic):
-        horario = Horario(dic["id"], datetime.strptime(dic["data"], "%d/%m/%Y%H:%M"))
+        horario = Horario(dic["id"], datetime.strptime(dic["data"], "%d/%m/%Y %H:%M"))
         horario.set_confirmado(dic["confirmado"])
         horario.set_id_cliente(dic["id_cliente"])
         horario.set_id_servico(dic["id_servico"])
@@ -93,5 +95,5 @@ class HorarioDAO:
 
     @classmethod
     def salvar(cls):
-        with open("Servicos.json", mode="w") as arquivo:
-            json.dump(cls.__objetos, arquivo, default = Horario.to_json)  
+        with open("Horario.json", mode="w") as arquivo:
+            json.dump(cls.__objetos, arquivo, default = Horario.to_json)

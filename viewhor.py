@@ -11,6 +11,7 @@ class View:
 
     def horario_atualizar(id, data, confirmado, id_cliente, id_servico):
         c= Horario(id, data)
+        c.set_confirmado(confirmado)
         c.set_id_cliente(id_cliente)
         c.set_id_servico(id_servico)
         HorarioDAO.atualizar(c)

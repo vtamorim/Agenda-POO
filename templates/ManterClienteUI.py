@@ -24,9 +24,9 @@ class ClienteUI:
     def inserir():
         nome = st.text_input("Informe o nome")
         email = st.text_input("Informe o e-mail")
-        valor = st.text_input("Informe o valor")
+        fone = st.text_input("Informe o fone")
         if st.button("Inserir"):
-            View.Cliente_inserir(nome, email, valor)
+            View.Cliente_inserir(nome, email, fone)
             st.success("Cliente inserido com sucesso")
             time.sleep(2)
             st.rerun()
@@ -38,10 +38,10 @@ class ClienteUI:
             op = st.selectbox("Atualização de Clientes", Clientes)
             nome = st.text_input("Informe o novo nome", op.get_nome())
             email = st.text_input("Informe o novo e-mail", op.get_email())
-            valor = st.text_input("Informe o novo valor", op.get_valor())
+            fone = st.text_input("Informe o novo fone", op.get_fone())
             if st.button("Atualizar"):
                 id = op.get_id()
-                View.Cliente_atualizar(id, nome, email, valor)
+                View.Cliente_atualizar(id, nome, email, fone)
                 st.success("Cliente atualizado com sucesso")
                 time.sleep(2)
                 st.rerun()
