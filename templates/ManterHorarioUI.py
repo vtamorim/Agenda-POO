@@ -1,9 +1,7 @@
 import streamlit as st
 import pandas as pd
-from viewhor import View
 import time
-import viewsc
-import views
+from views import View
 from datetime import datetime
 
 class HorarioUI:
@@ -22,16 +20,16 @@ class HorarioUI:
         else:
             dic = []
             for obj in horarios:
-                cliente = viewsc.View.Cliente_listar_id(obj.get_id_cliente())
-                servico = views.View.Servico_listar_id(obj.get_id_servico())
+                cliente = View.Cliente_listar_id(obj.get_id_cliente())
+                servico = View.Servico_listar_id(obj.get_id_servico())
                 if cliente != None: cliente = cliente.get_nome()
-                if servico != None: servico = servico.get_nome()
+                if servico != None: servico = servico.get_descricao()
                 dic.append({"id": obj.get_id(), "data": obj.get_data(),"confirmado":obj.get_confirmado(),"cliente" : cliente,"servico" : servico})
             df = pd.DataFrame(dic)
             st.dataframe(df)
     def inserir():
-        clientes= viewsc.View.Cliente_listar()
-        servicos = views.View.Servico_listar()
+        clientes= View.Cliente_listar()
+        servicos = View.Servico_listar()
 
         data = st.text_input("Informe a data e horário do serviço",datetime.now().strftime("%d/%m/%Y %H:%M"))
         confirmado = st.checkbox("Confirmado")
@@ -53,8 +51,8 @@ class HorarioUI:
         horarios = View.horario_listar()
         if len(horarios) == 0: st.write("Nenhum horário cadastrado")
         else:
-            clientes = viewsc.View.Cliente_listar()
-            servicos= views.View.Servico_listar()
+            clientes = View.Cliente_listar()
+            servicos= View.Servico_listar()
             op = st.selectbox("Atualização de Horários",horarios)
             data = st.text_input("Informe um nova data e um novo serviço",op.get_data().strftime("%d/%m/%Y %H:%M"))
             confirmado = st.checkbox("Nova Confirmação", op.get_confirmado())

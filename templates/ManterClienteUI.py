@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from viewsc import View
+from views import View
 import time
 
 class ClienteUI:
