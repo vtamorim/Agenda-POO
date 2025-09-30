@@ -23,8 +23,8 @@ class View:
         ServicoDAO.excluir(Servicos)
 
     # Métodos de Cliente
-    def Cliente_inserir(nome, especialidade, conselho):
-        Clientes = Cliente(0, nome, especialidade, conselho)
+    def Cliente_inserir(nome, email, fone,senha):
+        Clientes = Cliente(0, nome, email, fone , senha)
         ClienteDAO.inserir(Clientes)
 
     def Cliente_listar():
@@ -33,14 +33,24 @@ class View:
     def Cliente_listar_id(id):
         return ClienteDAO.listar_id(id)
 
-    def Cliente_atualizar(id, nome, email, conselho):
-        Clientes = Cliente(id, nome, email, conselho)
+    def Cliente_atualizar(id, nome, email, fone,senha):
+        Clientes = Cliente(id, nome, email, fone,senha)
         ClienteDAO.atualizar(Clientes)
 
     def Cliente_excluir(id):
-        Clientes = Cliente(id, "", "", "")
+        Clientes = Cliente(id, "", "", "","")
         ClienteDAO.excluir(Clientes)
 
+    def Cliente_CriarAdmin():
+        for c in View.Cliente_listar():
+            if c.get_email() == "admin": return
+        View.Cliente_inserir("admin", "admin", "fone", "1234")
+
+    def Cliente_Autenticar(email, senha):
+        for c in View.Cliente_listar():
+            if c.get_email() == email and c.get_senha() == senha:
+                return {"id": c.get_id(), "nome": c.get_nome()}
+        return None
     # Métodos de Horário
     def horario_inserir(data, confirmado, id_cliente, id_servico,id_profissional):
         c = Horario(0, data)

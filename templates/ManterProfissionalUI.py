@@ -5,7 +5,7 @@ import time
 
 class ProfissionalUI:
     def main():
-        st.header("Cadastro de Profissionals")
+        st.header("Cadastro de Profissional")
         tab1, tab2, tab3, tab4 = st.tabs(["Listar", "Inserir", "Atualizar", "Excluir"])
         with tab1: ProfissionalUI.listar()
         with tab2: ProfissionalUI.inserir()
