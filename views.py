@@ -3,6 +3,11 @@ from models.cliente import Cliente, ClienteDAO
 from models.horario import Horario, HorarioDAO
 from models.profissional import Profissional,ProfissionalDAO
 class View:
+    def Profissional_CriarAdmin():
+        for p in View.Profissional_listar():
+            if p.get_email() == "admin":
+                return
+        View.Profissional_inserir("admin", "Administrador", "Admin", "0000", "admin", "1234")
     # Métodos de Serviço
     def Servico_inserir(descricao, valor):
         Servicos = Servico(0, descricao, valor)
@@ -76,8 +81,8 @@ class View:
         HorarioDAO.excluir(c)
     
 
-    def Profissional_inserir(nome, especialidade, conselho):
-        Profissionals = Profissional(0, nome, especialidade, conselho)
+    def Profissional_inserir(nome, especialidade, conselho, email, senha):
+        Profissionals = Profissional(0, nome, especialidade, conselho, email, senha)
         ProfissionalDAO.inserir(Profissionals)
 
     def Profissional_listar():
@@ -86,9 +91,14 @@ class View:
     def Profissional_listar_id(id):
         return ProfissionalDAO.listar_id(id)
 
-    def Profissional_atualizar(id, nome, especialidade, conselho):
-        Profissionals = Profissional(id, nome, especialidade, conselho)
+    def Profissional_atualizar(id, nome, especialidade, conselho, email, senha):
+        Profissionals = Profissional(id, nome, especialidade, conselho, email, senha)
         ProfissionalDAO.atualizar(Profissionals)
+    def Profissional_Autenticar(email, senha):
+        for p in View.Profissional_listar():
+            if p.get_email() == email and p.get_senha() == senha:
+                return {"id": p.get_id(), "nome": p.get_nome()}
+        return None
 
     def Profissional_excluir(id):
         Profissionals = Profissional(id, "", "", "")
