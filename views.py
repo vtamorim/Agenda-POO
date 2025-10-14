@@ -2,6 +2,7 @@ from models.servico import Servico, ServicoDAO
 from models.cliente import Cliente, ClienteDAO
 from models.horario import Horario, HorarioDAO
 from models.profissional import Profissional,ProfissionalDAO
+from datetime import datetime
 class View:
     def Profissional_CriarAdmin():
         for p in View.Profissional_listar():
@@ -14,7 +15,9 @@ class View:
         ServicoDAO.inserir(Servicos)
 
     def Servico_listar():
-        return ServicoDAO.listar()
+        r = ServicoDAO.listar()
+        r.sort(key = lambda obj: obj.get_descricao())
+        return r
 
     def Servico_listar_id(id):
         return ServicoDAO.listar_id(id)
@@ -33,7 +36,9 @@ class View:
         ClienteDAO.inserir(Clientes)
 
     def Cliente_listar():
-        return ClienteDAO.listar()
+        r = ClienteDAO.listar()
+        r.sort(key = lambda obj: obj.get_nome())
+        return r
 
     def Cliente_listar_id(id):
         return ClienteDAO.listar_id(id)
@@ -51,6 +56,7 @@ class View:
             if c.get_email() == "admin": return
         View.Cliente_inserir("admin", "admin", "fone", "1234")
 
+    @staticmethod
     def Cliente_Autenticar(email, senha):
         for c in View.Cliente_listar():
             if c.get_email() == email and c.get_senha() == senha:
@@ -66,7 +72,9 @@ class View:
         HorarioDAO.inserir(c)
 
     def horario_listar():
-        return HorarioDAO.listar()
+        r = HorarioDAO.listar()
+        r.sort(key = lambda obj: obj.get_data())
+        return r
 
     def horario_atualizar(id, data, confirmado, id_cliente, id_servico,id_profissional):
         c = Horario(id, data)
@@ -86,7 +94,9 @@ class View:
         ProfissionalDAO.inserir(Profissionals)
 
     def Profissional_listar():
-        return ProfissionalDAO.listar()
+        r = ProfissionalDAO.listar()
+        r.sort(key = lambda obj: obj.get_nome())
+        return r
 
     def Profissional_listar_id(id):
         return ProfissionalDAO.listar_id(id)
@@ -94,6 +104,7 @@ class View:
     def Profissional_atualizar(id, nome, especialidade, conselho, email, senha):
         Profissionals = Profissional(id, nome, especialidade, conselho, email, senha)
         ProfissionalDAO.atualizar(Profissionals)
+    @staticmethod
     def Profissional_Autenticar(email, senha):
         for p in View.Profissional_listar():
             if p.get_email() == email and p.get_senha() == senha:
@@ -103,3 +114,20 @@ class View:
     def Profissional_excluir(id):
         Profissionals = Profissional(id, "", "", "")
         ProfissionalDAO.excluir(Profissionals)
+    
+
+    def horario_agendar_horario(id_profissional):
+        r = []
+        agora = datetime.now()
+
+        for h in View.horario_listar():
+            if (
+                h.get_data() >= agora and
+                h.get_confirmado() == False and
+                h.get_id_cliente() is None and
+                h.get_id_profissional() == id_profissional
+            ):
+                r.append(h)
+
+        r.sort(key=lambda h: h.get_data())
+        return r

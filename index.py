@@ -7,8 +7,12 @@ from templates.loginUI import LoginUI
 from templates.abrircontaUI import AbrirContaUI
 from templates.perfilClienteUI import perfilClienteUI
 from views import View
-
-
+from templates.agendarservicoUI import AgendarServicoUI
+from templates.abriragendaUI import AbrirAgendaUI
+from templates.confirmarservicoUI import ConfirmarServicoUI
+from templates.meusservicosUI import MeusServicosUI
+from templates.alterarsenhaUI import AlterarSenhaUI
+from templates.visualizaragendaUI import VisualizarAgendaUI
 
 import streamlit as st
 class IndexUI:
@@ -36,13 +40,34 @@ class IndexUI:
         if op == "Abrir Conta": AbrirContaUI.main()
 
     def menu_cliente():
-        op = st.sidebar.selectbox("Menu", ["Meus Dados"])
-        if op == "Meus Dados":
+        
             if st.session_state.get("usuario_tipo") == "Profissional":
                 from templates.perfilProfissionalUI import perfilProfissionalUI
                 perfilProfissionalUI.main()
             else:
-                perfilClienteUI.main()
+                op = st.sidebar.selectbox("Menu", ["Meus Dados", "Agendar Serviço","Visualizar Agenda","Meus Serviços","Confirmar Serviço","Alterar Senha","Abrir Agenda"])
+
+                if op == "Visualizar Agenda":
+                    VisualizarAgendaUI.main()
+
+                if op == "Meus Serviços":
+                    MeusServicosUI.main()
+
+                if op == "Confirmar Serviço":
+                    ConfirmarServicoUI.main()
+                
+                if op == "Alterar Senha":
+                    AlterarSenhaUI.main()
+
+                if op == "Abrir Agenda":
+                    AbrirAgendaUI.main()
+
+
+                if op == "Meus Dados":
+                    perfilClienteUI.main()
+                    
+                if op == "Agendar Serviço":
+                    AgendarServicoUI.main()
 
     def sair_sistema():
         if st.sidebar.button("Sair"):

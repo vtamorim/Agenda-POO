@@ -12,7 +12,6 @@ class LoginUI:
             if tipo_usuario == "Cliente":
                 # Impede login como admin cliente, a menos que exista um cliente admin de verdade
                 if email == "admin" and senha == "1234":
-                    from views import View
                     admin_cliente = None
                     for c in View.Cliente_listar():
                         if c.get_email() == "admin" and c.get_senha() == "1234":
