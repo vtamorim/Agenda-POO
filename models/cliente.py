@@ -1,7 +1,7 @@
 import json
 
 class Cliente:
-    def __init__(self, id, nome, email, fone,senha):
+    def __init__(self, id, nome, email, fone, senha):
         self.set_id(id)
         self.set_nome(nome)
         self.set_email(email)
@@ -13,7 +13,6 @@ class Cliente:
     def get_email(self): return self.__email
     def get_fone(self): return self.__fone
     def get_senha(self): return self.__senha
-    
 
     def set_senha(self, senha): self.__senha = senha
     def set_id(self, id): self.__id = id
@@ -22,13 +21,11 @@ class Cliente:
     def set_fone(self, fone): self.__fone = fone
 
     def to_json(self):
-        dic = {"id":self.__id, "nome":self.__nome, "email":self.__email, "fone":self.__fone, "senha":self.__senha}
+        dic = {"id":self.__id, "nome":self.__nome, "email":self.__email,"fone":self.__fone, "senha":self.__senha}
         return dic
-    
     @staticmethod
     def from_json(dic):
         return Cliente(dic["id"], dic["nome"], dic["email"], dic["fone"],dic["senha"])
-
     def __str__(self):
         return f"{self.__id} - {self.__nome} - {self.__email} - {self.__fone}"
 
@@ -76,7 +73,7 @@ class ClienteDAO:
     def abrir(cls):
         cls.__objetos = []
         try:
-            with open("Clientes.json", mode="r") as arquivo:
+            with open("clientes.json", mode="r") as arquivo:
                 list_dic = json.load(arquivo)
                 for dic in list_dic:
                     obj = Cliente.from_json(dic)
@@ -86,5 +83,5 @@ class ClienteDAO:
 
     @classmethod
     def salvar(cls):
-        with open("Clientes.json", mode="w") as arquivo:
+        with open("clientes.json", mode="w") as arquivo:
             json.dump(cls.__objetos, arquivo, default = Cliente.to_json)  

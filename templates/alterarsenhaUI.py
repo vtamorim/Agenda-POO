@@ -1,23 +1,32 @@
 import streamlit as st
+import time
 from views import View
 
 class AlterarSenhaUI:
     def main():
-        st.header("Alterar Senha do Admin")
-        usuario_id = st.session_state.get("usuario_id")
-        usuario_tipo = st.session_state.get("usuario_tipo")
-        if not usuario_id or usuario_tipo != "Cliente":
-            st.error("Apenas o usuário Admin pode alterar a senha por aqui.")
+        st.header("Alterar Senha (Admin)")
+
+        admin = View.cliente_listar_id(st.session_state["usuario_id"])
+        if admin is None or admin.get_email() != "admin":
+            st.warning("Apenas o administrador pode alterar a senha aqui.")
             return
-        admin = View.Cliente_listar_id(usuario_id)
-        if not admin or admin.get_email() != "admin":
-            st.error("Apenas o usuário Admin pode alterar a senha por aqui.")
-            return
-        nova_senha = st.text_input("Nova senha", type="password")
-        confirmar = st.text_input("Confirme a nova senha", type="password")
+
+        st.text_input("Nome", admin.get_nome(), disabled=True)
+        st.text_input("E-mail (não pode ser alterado)", admin.get_email(), disabled=True)
+
+        nova_senha = st.text_input("Informe a nova senha", type="password")
+
         if st.button("Alterar Senha"):
-            if not nova_senha or nova_senha != confirmar:
-                st.error("As senhas não coincidem ou estão em branco.")
+            if nova_senha.strip() == "":
+                st.error("Por favor, informe uma nova senha válida.")
             else:
-                View.Cliente_atualizar(admin.get_id(), admin.get_nome(), admin.get_email(), admin.get_fone(), nova_senha)
+                View.cliente_atualizar(
+                    admin.get_id(),
+                    admin.get_nome(),
+                    admin.get_email(),
+                    admin.get_fone(),
+                    nova_senha
+                )
                 st.success("Senha alterada com sucesso!")
+                time.sleep(2)
+                st.rerun()

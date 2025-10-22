@@ -1,14 +1,17 @@
 import json
 
+
 class Servico:
     def __init__(self, id, descricao, valor):
         self.set_id(id)
         self.set_descricao(descricao)
         self.set_valor(valor)
 
+    def __str__(self):
+        return f"{self.__id} - {self.__descricao} - R$ {self.__valor:.2f}"
+
     def get_id(self): return self.__id
     def get_descricao(self): return self.__descricao
-
     def get_valor(self): return self.__valor
 
     def set_id(self, id): self.__id = id
@@ -16,15 +19,18 @@ class Servico:
     def set_valor(self, valor): self.__valor = valor
 
     def to_json(self):
-        dic = {"id":self.__id, "descricao":self.__descricao, "valor":self.__valor}
+        dic = {
+            "id": self.__id,
+            "descricao": self.__descricao,
+            "valor": self.__valor
+        }
         return dic
-    
+
     @staticmethod
     def from_json(dic):
         return Servico(dic["id"], dic["descricao"], dic["valor"])
 
-    def __str__(self):
-        return f"{self.__id} - {self.__descricao} - {self.__valor}"
+
 
 class ServicoDAO:
     __objetos = []
@@ -34,7 +40,8 @@ class ServicoDAO:
         cls.abrir()
         id = 0
         for aux in cls.__objetos:
-            if aux.get_id() > id: id = aux.get_id()
+            if aux.get_id() > id: 
+                id = aux.get_id()
         obj.set_id(id + 1)
         cls.__objetos.append(obj)
         cls.salvar()
@@ -47,8 +54,9 @@ class ServicoDAO:
     @classmethod
     def listar_id(cls, id):
         cls.abrir()
-        for obj in cls.__objetos: 
-            if obj.get_id() == id: return obj
+        for obj in cls.__objetos:
+            if obj.get_id() == id:
+                return obj
         return None
 
     @classmethod
@@ -70,7 +78,7 @@ class ServicoDAO:
     def abrir(cls):
         cls.__objetos = []
         try:
-            with open("Servicos.json", mode="r") as arquivo:
+            with open("servicos.json", mode="r") as arquivo:
                 list_dic = json.load(arquivo)
                 for dic in list_dic:
                     obj = Servico.from_json(dic)
@@ -80,5 +88,5 @@ class ServicoDAO:
 
     @classmethod
     def salvar(cls):
-        with open("Servicos.json", mode="w") as arquivo:
-            json.dump(cls.__objetos, arquivo, default = Servico.to_json)  
+        with open("servicos.json", mode="w") as arquivo:
+            json.dump(cls.__objetos, arquivo, default=Servico.to_json)

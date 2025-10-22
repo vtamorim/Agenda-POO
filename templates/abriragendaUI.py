@@ -14,9 +14,6 @@ class AbrirAgendaUI:
         servico = st.selectbox("Serviço oferecido", servicos, format_func=lambda s: s.get_descricao() if s else "")
         if st.button("Inserir horários na agenda"):
             profissional_id = st.session_state.get("usuario_id")
-            if not profissional_id:
-                st.error("Usuário não autenticado!")
-                return
             dt_inicial = datetime.combine(data, hora_inicial)
             dt_final = datetime.combine(data, hora_final)
             horarios_criados = 0

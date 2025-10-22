@@ -1,57 +1,69 @@
 import streamlit as st
 import pandas as pd
-from views import View
 import time
+from views import View
 
-class ServicoUI:
+
+class ManterServicoUI:
+
     def main():
-        st.header("Cadastro de Servicos")
+        st.header("Cadastro de Serviços")
         tab1, tab2, tab3, tab4 = st.tabs(["Listar", "Inserir", "Atualizar", "Excluir"])
-        with tab1: ServicoUI.listar()
-        with tab2: ServicoUI.inserir()
-        with tab3: ServicoUI.atualizar()
-        with tab4: ServicoUI.excluir()
+        with tab1: ManterServicoUI.listar()
+        with tab2: ManterServicoUI.inserir()
+        with tab3: ManterServicoUI.atualizar()
+        with tab4: ManterServicoUI.excluir()
 
     def listar():
-        Servicos = View.Servico_listar()
-        if len(Servicos) == 0: st.write("Nenhum Servico cadastrado")
+        servicos = View.servico_listar()
+        if len(servicos) == 0:
+            st.write("Nenhum serviço cadastrado")
         else:
-            list_dic = []
-            for obj in Servicos: list_dic.append(obj.to_json())
-            df = pd.DataFrame(list_dic)
-            st.dataframe(df)
+            dic = []
+            for obj in servicos:
+                dic.append({
+                    "id": obj.get_id(),
+                    "descricao": obj.get_descricao(),
+                    "valor": obj.get_valor()
+                })
+            df = pd.DataFrame(dic)
+            st.dataframe(df, hide_index=True)
 
     def inserir():
-        descricao = st.text_input("Informe o descricao")
-        valor = st.text_input("Informe o valor")
+        descricao = st.text_input("Descrição do serviço")
+        valor = st.number_input("Valor do serviço", min_value=0.0, step=0.1)
+
         if st.button("Inserir"):
-            View.Servico_inserir(descricao, valor)
-            st.success("Servico inserido com sucesso")
+            View.servico_inserir(descricao, valor)
+            st.success("Serviço inserido com sucesso")
             time.sleep(2)
             st.rerun()
 
     def atualizar():
-        Servicos = View.Servico_listar()
-        if len(Servicos) == 0: st.write("Nenhum Servico cadastrado")
+        servicos = View.servico_listar()
+        if len(servicos) == 0:
+            st.write("Nenhum serviço cadastrado")
         else:
-            op = st.selectbox("Atualização de Servicos", Servicos)
-            descricao = st.text_input("Informe o novo descricao", op.get_descricao())
-            valor = st.text_input("Informe o novo valor", op.get_valor())
+            op = st.selectbox("Atualização de Serviços", servicos)
+            descricao = st.text_input("Nova descrição", op.get_descricao())
+            valor = st.number_input("Novo valor", value=op.get_valor())
+
             if st.button("Atualizar"):
                 id = op.get_id()
-                View.Servico_atualizar(id, descricao, valor)
-                st.success("Servico atualizado com sucesso")
-                time.sleep(2)
+                View.servico_atualizar(id, descricao, valor)
+                st.success("Serviço atualizado com sucesso")
                 st.rerun()
 
     def excluir():
-        Servicos = View.Servico_listar()
-        if len(Servicos) == 0: st.write("Nenhum Servico cadastrado")
+        servicos = View.servico_listar()
+        if len(servicos) == 0:
+            st.write("Nenhum serviço cadastrado")
         else:
-            op = st.selectbox("Exclusão de Servicos", Servicos)
+            op = st.selectbox("Exclusão de Serviços", servicos)
+
             if st.button("Excluir"):
                 id = op.get_id()
-                View.Servico_excluir(id)
-                st.success("Servico excluído com sucesso")
+                View.servico_excluir(id)
+                st.success("Serviço excluído com sucesso")
                 time.sleep(2)
                 st.rerun()
