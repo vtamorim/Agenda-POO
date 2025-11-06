@@ -46,7 +46,21 @@ class ManterServicoUI:
         else:
             op = st.selectbox("Atualização de Serviços", servicos)
             descricao = st.text_input("Nova descrição", op.get_descricao())
-            valor = st.number_input("Novo valor", value=op.get_valor())
+
+            # garantir float e evitar conflito de estado com key única por serviço
+            try:
+                valor_inicial = float(op.get_valor())
+            except (TypeError, ValueError):
+                valor_inicial = 0.0
+
+            valor = st.number_input(
+                "Novo valor",
+                value=valor_inicial,
+                min_value=0.0,
+                step=0.1,
+                format="%.2f",
+                key=f"valor_{op.get_id()}"
+            )
 
             if st.button("Atualizar"):
                 id = op.get_id()

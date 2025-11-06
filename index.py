@@ -13,6 +13,8 @@ from templates.agendarservicoUI import AgendarServicoUI
 from templates.gerenciarangenda import GerenciarAgendaUI
 from templates.meusservicosUI import MeusServicosUI
 from templates.confirmarservicoUI import ConfirmarServicoUI
+from templates.admin_notificacoes import admin_notificacoesUI
+from templates.indisponibilizar import IndisponibilizarUI
 from views import View
 
 class IndexUI:
@@ -30,20 +32,32 @@ class IndexUI:
         if op == "Agendar Serviço": AgendarServicoUI.main()
         if op == "Meus Serviços": MeusServicosUI.main()
     def menu_profissional():
-        op = st.sidebar.selectbox("Menu", ["Meus Dados", "gerenciar agenda","confirmar serviço"])
+        # Adicionado "Início" e "Indisponibilizar Horário" para profissionais
+        op = st.sidebar.selectbox("Menu", ["Início", "Meus Dados", "gerenciar agenda","confirmar serviço","Indisponibilizar Horário"])
+        if op == "Início":
+            st.header("Área do Profissional")
+            st.write("Bem-vindo(a). Use o menu lateral para acessar suas opções.")
         if op == "Meus Dados": PerfilProfissionalUI.main()
         if op == "gerenciar agenda": GerenciarAgendaUI.main()
         if op == "confirmar serviço": ConfirmarServicoUI.main()
+        if op == "Indisponibilizar Horário":
+            # importa o template ao ser selecionado para renderizar a UI
+            IndisponibilizarUI.main()
     def menu_admin(): 
+        # Adicionado item de Notificações de Indisponibilidade
         op = st.sidebar.selectbox("Menu", ["Cadastro de Clientes", 
                                             "Cadastro de Serviços", 
                                             "Cadastro de Horários", 
                                             "Cadastro de Profissionais",
+                                            "Notificações de Indisponibilidade",
                                             "Alterar Senha"])
         if op == "Cadastro de Clientes": ManterClienteUI.main()
         if op == "Cadastro de Serviços": ManterServicoUI.main()
         if op == "Cadastro de Horários": ManterHorarioUI.main()
         if op == "Cadastro de Profissionais": ManterProfissionalUI.main()
+        if op == "Notificações de Indisponibilidade":
+            # importa o template admin quando selecionado
+            admin_notificacoesUI.main()
         if op == "Alterar Senha": AlterarSenhaUI.main()
     def sair_do_sistema():
         if st.sidebar.button("Sair"):

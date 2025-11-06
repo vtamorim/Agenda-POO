@@ -1,1 +1,21 @@
-[{"id": 1, "nome": "sun", "especialidade": "nada", "conselho": "queconselho", "email": "sun@sla.com", "senha": "sun"}]
+[
+  {
+    "id": 1,
+    "nome": "sun",
+    "especialidade": "nada",
+    "conselho": "queconselho",
+    "email": "sun@sla.com",
+    "senha": "sun",
+    "disponivel": "S"
+  },
+  {
+    "id": 2,
+    "nome": "alguem",
+    "especialidade": "servico n sei oq",
+    "conselho": "40",
+    "email": "oq@gmail.com",
+    "senha": "oq",
+    "disponivel": "S",
+    "oculto": true
+  }
+]

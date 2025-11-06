@@ -8,7 +8,7 @@ class Servico:
         self.set_valor(valor)
 
     def __str__(self):
-        return f"{self.__id} - {self.__descricao} - R$ {self.__valor:.2f}"
+        return f"{self.__id} - {self.__descricao} - R$ {self.__valor}"
 
     def get_id(self): return self.__id
     def get_descricao(self): return self.__descricao
