@@ -92,3 +92,35 @@ class DAO(ABC):
     @abstractmethod
     def salvar(cls):
         pass
+    @classmethod
+    def atualizar(cls, obj):
+        """
+        Atualiza um objeto existente (mesmo ID) na lista e salva.
+        Compatível com objetos com get_id()/set_id() ou atributo 'id'.
+        """
+        cls.abrir()
+        id_alvo = None
+
+        # tenta pegar o ID do objeto passado
+        if hasattr(obj, "get_id"):
+            id_alvo = obj.get_id()
+        else:
+            id_alvo = getattr(obj, "id", None)
+
+        if id_alvo is None:
+            raise ValueError("Objeto sem ID definido; não é possível atualizar.")
+
+        # procura o objeto existente
+        for i, existente in enumerate(cls._objetos):
+            existente_id = None
+            if hasattr(existente, "get_id"):
+                existente_id = existente.get_id()
+            else:
+                existente_id = getattr(existente, "id", None)
+
+            if existente_id == id_alvo:
+                cls._objetos[i] = obj  # substitui
+                cls.salvar()
+                return
+
+        raise ValueError(f"Objeto com id {id_alvo} não encontrado para atualização.")
