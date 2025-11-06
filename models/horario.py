@@ -69,4 +69,5 @@ class HorarioDAO(DAO):
     @classmethod
     def salvar(cls):
         with open("horario.json", mode="w") as arquivo:
-            json.dump(cls._objetos, arquivo, default = Horario.to_json)
+            list_dic = [obj.to_json() for obj in cls._objetos]
+            json.dump(list_dic, arquivo, indent=4)
