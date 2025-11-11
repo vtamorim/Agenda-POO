@@ -12,7 +12,7 @@ class DAO(ABC):
         """
         cls.abrir()
 
-        # calcula próximo id baseado no maior id já presente
+    
         max_id = 0
         for aux in cls._objetos:
             aux_id = None
@@ -31,7 +31,7 @@ class DAO(ABC):
 
         next_id = max_id + 1
 
-        # atribui id ao objeto (preferindo set_id se disponível)
+       
         if hasattr(obj, "set_id"):
             try:
                 obj.set_id(next_id)
@@ -66,13 +66,12 @@ class DAO(ABC):
 
     @classmethod
     def excluir(cls, obj):
-        # aceita tanto a instância quanto um id (int/str)
+
         cls.abrir()
         target = None
         if isinstance(obj, (int, str)):
             target = cls.listar_id(obj)
         else:
-            # tenta obter id da instância fornecida
             try:
                 obj_id = obj.get_id() if hasattr(obj, "get_id") else getattr(obj, "id", None)
             except Exception:
@@ -101,7 +100,7 @@ class DAO(ABC):
         cls.abrir()
         id_alvo = None
 
-        # tenta pegar o ID do objeto passado
+        
         if hasattr(obj, "get_id"):
             id_alvo = obj.get_id()
         else:
@@ -110,7 +109,7 @@ class DAO(ABC):
         if id_alvo is None:
             raise ValueError("Objeto sem ID definido; não é possível atualizar.")
 
-        # procura o objeto existente
+     
         for i, existente in enumerate(cls._objetos):
             existente_id = None
             if hasattr(existente, "get_id"):
