@@ -18,13 +18,34 @@ class Profissional:
     def get_senha(self): return self.__senha
     def get_disponivel(self): return self.__disponivel
 
-    def set_id(self, id): self.__id = id
-    def set_nome(self, nome): self.__nome = nome
-    def set_especialidade(self, especialidade): self.__especialidade = especialidade
-    def set_conselho(self, conselho): self.__conselho = conselho
-    def set_email(self, email): self.__email = email
-    def set_senha(self, senha): self.__senha = senha
-    def set_disponivel(self,disponivel): self.__disponivel = disponivel
+    def set_id(self, id):
+        if id == "": 
+            raise ValueError("Nome inválido")
+        self.__id = id
+    def set_nome(self, nome): 
+        if nome == "": 
+            raise ValueError("Nome inválido")
+        self.__nome = nome
+    def set_especialidade(self, especialidade):
+        if especialidade == "": 
+            raise ValueError("especialidade inválido")
+        self.__especialidade = especialidade
+    def set_conselho(self, conselho): 
+        if conselho == "": 
+            raise ValueError("conselho inválido")
+        self.__conselho = conselho
+    def set_email(self, email):
+        if email == "": 
+            raise ValueError("email inválido")
+        self.__email = email
+    def set_senha(self, senha):
+        if senha == "": 
+            raise ValueError("senha inválido")
+        self.__senha = senha
+    def set_disponivel(self,disponivel):
+        if disponivel == "": 
+            raise ValueError("disponivel inválido")
+        self.__disponivel = disponivel
     def to_json(self):
         dic = {"id":self.__id, "nome":self.__nome, "especialidade":self.__especialidade, "conselho":self.__conselho, "email":self.__email, "senha":self.__senha,"disponivel": self.__disponivel}
         return dic

@@ -14,9 +14,18 @@ class Servico:
     def get_descricao(self): return self.__descricao
     def get_valor(self): return self.__valor
 
-    def set_id(self, id): self.__id = id
-    def set_descricao(self, descricao): self.__descricao = descricao
-    def set_valor(self, valor): self.__valor = valor
+    def set_id(self, id):
+        if id == "": 
+            raise ValueError("id inválido")
+        self.__id = id
+    def set_descricao(self, descricao):
+        if descricao == "": 
+            raise ValueError("descricao inválido")
+        self.__descricao = descricao
+    def set_valor(self, valor):
+        if valor == "": 
+            raise ValueError("valor inválido")
+        self.__valor = valor
 
     def to_json(self):
         dic = {

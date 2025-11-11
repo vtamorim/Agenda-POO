@@ -14,11 +14,26 @@ class Cliente:
     def get_fone(self): return self.__fone
     def get_senha(self): return self.__senha
 
-    def set_senha(self, senha): self.__senha = senha
-    def set_id(self, id): self.__id = id
-    def set_nome(self, nome): self.__nome = nome
-    def set_email(self, email): self.__email = email
-    def set_fone(self, fone): self.__fone = fone
+    def set_senha(self, senha):
+        if senha == "": 
+            raise ValueError("senha inválido")
+        self.__senha = senha
+    def set_id(self, id):
+        if id == "": 
+            raise ValueError("id inválido")
+        self.__id = id
+    def set_nome(self, nome): 
+        if nome == "": 
+            raise ValueError("Nome inválido")
+        self.__nome = nome
+    def set_email(self, email): 
+        if email == "": 
+            raise ValueError("email inválido")
+        self.__email = email
+    def set_fone(self, fone): 
+        if fone == "": 
+            raise ValueError("fone inválido")
+        self.__fone = fone
 
     def to_json(self):
         dic = {"id":self.__id, "nome":self.__nome, "email":self.__email,"fone":self.__fone, "senha":self.__senha}

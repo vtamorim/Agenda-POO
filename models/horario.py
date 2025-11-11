@@ -23,12 +23,30 @@ class Horario:
     def get_id_profissional(self): return self.__id_profissional
 
     # sets
-    def set_id(self, id): self.__id = id
-    def set_data(self, data): self.__data = data
-    def set_confirmado(self, confirmado): self.__confirmado = confirmado
-    def set_id_cliente(self, id_cliente): self.__id_cliente = id_cliente
-    def set_id_servico(self, id_servico): self.__id_servico = id_servico
-    def set_id_profissional(self, id_profissional): self.__id_profissional = id_profissional
+    def set_id(self, id):
+        if id == "": 
+            raise ValueError("id inválido")
+        self.__id = id
+    def set_data(self, data):
+        if data == "": 
+            raise ValueError("data inválido")
+        self.__data = data
+    def set_confirmado(self, confirmado):
+        if confirmado == "": 
+            raise ValueError("confirmado inválido")
+        self.__confirmado = confirmado
+    def set_id_cliente(self, id_cliente):
+        if id_cliente == "": 
+            raise ValueError("id_cliente inválido")
+        self.__id_cliente = id_cliente
+    def set_id_servico(self, id_servico):
+        if id_servico == "": 
+            raise ValueError("id_servico inválido")
+        self.__id_servico = id_servico
+    def set_id_profissional(self, id_profissional):
+        if id_profissional == "": 
+            raise ValueError("id_profissional inválido")
+        self.__id_profissional = id_profissional
 
     # json
     def to_json(self):
