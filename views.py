@@ -100,7 +100,7 @@ class View:
         profs = View._read_json(PROF_PATH)
         changed = False
         for p in profs:
-            # assumir que o arquivo profissional.json tem campo 'id' ou 'profissionalId'
+       
             if str(p.get("id") or p.get("profissionalId")) == str(profissional_id):
                 p["oculto"] = bool(oculto)
                 changed = True
@@ -221,7 +221,7 @@ class View:
         profs = View._read_json(PROF_PATH)
         indisponiveis = View._get_indisponiveis_ativas()
         
-        # Filtra profissionais que não estão ocultos nem indisponíveis
+      
         resultado = []
         for p in profs:
             if not p.get("oculto", False):
@@ -274,16 +274,16 @@ class View:
                 return p_copy
         return None
 
-    # se já existir a classe View, expõe essas funções como métodos estáticos para compatibilidade
+   
     try:
-        View  # verifica se View existe no módulo
+        View
     except NameError:
         View = None
 
     if View:
-        # nomes compatíveis com usos atuais do projeto
-        setattr(View, "listar_profissionais_publicos", staticmethod(lambda: listar_profissionais_publicos()))
-        setattr(View, "listar_profissionais", staticmethod(lambda incluir=False: listar_profissionais(incluir)))
-        setattr(View, "profissional_por_id", staticmethod(lambda pid, incluir=True: profissional_por_id(pid, incluir)))
+        
+        setattr(View, "listar_profissionais_publicos", staticmethod(lambda: View.listar_profissionais_publicos()))
+        setattr(View, "listar_profissionais", staticmethod(lambda incluir=False: View.listar_profissionais(incluir)))
+        setattr(View, "profissional_por_id", staticmethod(lambda pid, incluir=True: View.profissional_por_id(pid, incluir)))
         # compatibilidade com possível nome existente profissional_listar_id
-        setattr(View, "profissional_listar_id", staticmethod(lambda pid: profissional_por_id(pid, incluir_oculto=True)))
+        setattr(View, "profissional_listar_id", staticmethod(lambda pid: View.profissional_por_id(pid, incluir_oculto=True)))
